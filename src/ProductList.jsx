@@ -278,11 +278,24 @@ function ProductList({ onHomeClick }) {
                         <div key={categoryObj.category}>
                             <h2>{categoryObj.category}</h2>
                             {categoryObj.plants.map(plant => (
-                                <img src={plant.image}/>
+                                <div key={plant.name} className='product-card'>
+                                    <img src={plant.image}/>
+                                    <h3>{plant.name}</h3>
+                                    <p>{plant.description}</p>
+                                    <p>{plant.cost}</p>
+                                    <button
+                                        onClick={() => dispatch(addItem(plant))}
+                                        disabled={cart.some(item => item.name === plant.name)}
+                                    >
+                                        {cart.some(item => item.name === plant.name)
+                                            ? "Agregado al carrito"
+                                            : "Agregar al carrito"
+                                        }
+                                    </button>
+                                </div>       
                             ))}
-                        <div/>
+                        </div>
                     ))};
-
                 </div>
             ) : (
                 <CartItem onContinueShopping={handleContinueShopping} />
