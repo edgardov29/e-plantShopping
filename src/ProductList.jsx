@@ -299,22 +299,28 @@ function ProductList({ onHomeClick }) {
             </div>
             {!showCart ? (
                 <div className="product-grid">
-                    {plantsArray[0].plants.map((product) => (
+                    {plantsArray[0].plants.map((product) => {
+                        const isInCart = CartItems.some((item) => item.name === product.name);
+
+                        return (
                         <div key={product.name} className="product-card">
                             <img 
-                                src={product.image} 
-                                alt={product.name} 
-                                className='product-image'
+                            src={product.image} 
+                            alt={product.name} 
+                            className='product-image'
                             />
                             <h3>{product.name}</h3>
                             <p>{product.description}</p>
                             <p>{product.cost}</p>
-                            <button onClick={() => dispatch(addItem(product))}>
-                                Agregar al carrito
+                            <button
+                                onClick={() => dispatch(addItem(product))}
+                                disabled={isInCart}
+                            >
+                                {isInCart ? "Ya agregado" : "Agregar al carrito"}
                             </button>
                         </div>
-                    ))}
-
+                        );
+                    })}
 
                 </div>
             ) : (
